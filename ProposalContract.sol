@@ -83,6 +83,22 @@ contract ProposalContract {
         }
     }
 
+    function terminateProposal() external onlyOwner active {
+        proposal_history[counter].is_active = false;
+    }
+
+    function isVoted(address voter) public view returns (bool) {
+        return hasVoted[counter][voter];
+    }
+
+    function getCurrentProposal() external view returns (Proposal memory) {
+        return proposal_history[counter];
+    }
+
+    function getProposal(uint256 number) external view returns (Proposal memory) {
+        return proposal_history[number];
+    }
+
     function calculateCurrentState(Proposal storage proposal) private view returns (bool) {
         return proposal.approve > proposal.reject;
     }
